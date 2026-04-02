@@ -267,7 +267,6 @@ const OVERVIEW_CONFIG = [
 
 export default function Page() {
   const [isOn, setIsOn] = useState(false);
-  // Replaced 'any' with the proper Record type
   const [stats, setStats] = useState<Record<string, AccountData>>({});
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -287,7 +286,7 @@ export default function Page() {
   const themeText = isOn ? "text-[#1e202a]" : "text-white";
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isOn ? "bg-white" : "bg-[#1e202a]"}`}>
+    <div className={`min-h-screen transition-all duration-500 ${isOn ? "bg-white" : "bg-[#1e202a]"}`}>
       <div className="max-w-6xl mx-auto p-8">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
           <div>
@@ -296,9 +295,10 @@ export default function Page() {
               <p className="text-slate-500 font-bold text-sm">Total Followers: 23,004</p>
               <button 
                 onClick={loadDashboardData}
-                className="text-[10px] uppercase tracking-widest font-bold bg-slate-500/10 px-2 py-1 rounded text-slate-500"
+                disabled={isRefreshing}
+                className="text-[10px] uppercase tracking-widest font-bold bg-slate-500/10 hover:bg-slate-500/20 px-2 py-1 rounded transition-all text-slate-500"
               >
-                {isRefreshing ? "..." : "↻ Refresh"}
+                {isRefreshing ? "Refreshing..." : "↻ Refresh Data"}
               </button>
             </div>
           </div>
@@ -306,7 +306,7 @@ export default function Page() {
             <span className="text-xs font-bold text-slate-500">Dark Mode</span>
             <button 
               onClick={() => setIsOn(!isOn)} 
-              className={`relative w-12 h-6 flex items-center rounded-full p-1 ${isOn ? "bg-slate-300" : "bg-gradient-to-r from-[#378fe6] to-[#3eda82]"}`}
+              className={`relative w-12 h-6 flex items-center rounded-full p-1 transition-all ${isOn ? "bg-slate-300" : "bg-gradient-to-r from-[#378fe6] to-[#3eda82]"}`}
             >
               <div className={`w-4 h-4 rounded-full bg-white transition-all duration-300 ${isOn ? "translate-x-0" : "translate-x-6"}`} />
             </button>
@@ -314,11 +314,14 @@ export default function Page() {
         </header>
 
         {loading ? (
-          <div className="text-center py-20 text-slate-500 font-bold animate-pulse text-xl">Loading...</div>
+          <div className="text-center py-20 text-slate-500 font-bold animate-pulse text-xl">
+            Loading Dashboard Data...
+          </div>
         ) : (
           <>
+            {/* Top Cards Section */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              {TOP_CONFIG.map(c => {
+              {TOP_CONFIG.map((c) => {
                 const s = stats[c.id];
                 return (
                   <DashboardCard 
@@ -326,25 +329,30 @@ export default function Page() {
                     type="top" 
                     isOn={isOn} 
                     {...c} 
-                    count={s?.Count} 
-                    growth={s?.Growth} 
-                    isUp={s?.IsUp} 
+                    count={s?.Count ?? 0} 
+                    growth={s?.Growth ?? 0} 
+                    isUp={s?.IsUp ?? true} 
                   />
                 );
               })}
             </div>
-            <h2 className={`text-2xl font-bold mb-6 ${isOn ? "text-slate-600" : "text-white"}`}>Overview - Today</h2>
+
+            <h2 className={`text-2xl font-bold mb-6 ${isOn ? "text-slate-600" : "text-white"}`}>
+              Overview - Today
+            </h2>
+
+            {/* Overview Cards Section */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {OVERVIEW_CONFIG.map(c => {
+              {OVERVIEW_CONFIG.map((c) => {
                 const s = stats[c.id];
                 return (
                   <DashboardCard 
                     key={c.id} 
                     isOn={isOn} 
                     {...c} 
-                    count={s?.Count} 
-                    growth={s?.Growth} 
-                    isUp={s?.IsUp} 
+                    count={s?.Count ?? 0} 
+                    growth={s?.Growth ?? 0} 
+                    isUp={s?.IsUp ?? true} 
                   />
                 );
               })}
