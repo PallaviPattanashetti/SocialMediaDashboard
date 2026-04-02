@@ -22,13 +22,22 @@ export const getData = async () => {
   try {
     const res = await fetch('https://socialmediadashboardpp-dqehaabyb9ajh6bc.westus3-01.azurewebsites.net/api/Dashboard/data');
     if (!res.ok) return null;
-    const data = await res.json();
     
+    const data = await res.json();
     const ids = ["fb", "tw", "ig", "yt", "fb-v", "fb-l", "ig-l", "ig-v", "tw-r", "tw-l", "yt-l", "yt-v"];
     const formatted: any = {};
+
     data.forEach((item: any, i: number) => {
-      if (ids[i]) formatted[ids[i]] = item;
+      if (ids[i]) {
+        formatted[ids[i]] = {
+          count: item.count ?? item.Count ?? 0,
+          growth: item.growth ?? item.Growth ?? 0,
+          isUp: item.isUp ?? item.IsUp ?? true
+        };
+      }
     });
     return formatted;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 };
