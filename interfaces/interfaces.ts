@@ -1,6 +1,5 @@
-export interface AccountData
-{
-Count:number
-Growth:number
-IsUp:boolean
+export interface AccountData {
+  Count: number;
+  Growth: number;
+  IsUp: boolean;
 }
