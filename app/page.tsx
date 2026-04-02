@@ -8,7 +8,7 @@ import OverviewCards from "./Components/OverCards";
 
 
 export default function SocialDashboardPage() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [stats, setStats] = useState<Record<string, AccountData>>({});
   const [loading, setLoading] = useState(true);
 
