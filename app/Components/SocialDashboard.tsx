@@ -106,7 +106,7 @@
 
 
 
-interface DashboardCardProps {
+interface DashboardCard {
   type?: "top" | "overview";
   label?: string;
   count?: string | number;
@@ -120,7 +120,7 @@ interface DashboardCardProps {
 
 export default function DashboardCard({ 
   type = "overview", label, count, user, growth, isUp, isOn, icon, color = "" 
-}: DashboardCardProps) {
+}: DashboardCard) {
   const isTop = type === "top";
   const cardBg = isOn ? "bg-[#f0f2fa] text-[#1e202a]" : "bg-[#252a41] text-white";
   const growthColor = isUp ? "text-[#1db489]" : "text-[#dc414c]";

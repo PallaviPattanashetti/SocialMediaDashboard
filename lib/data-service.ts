@@ -3,6 +3,8 @@
 //     const res = await fetch('https://socialmediadashboardpp-dqehaabyb9ajh6bc.westus3-01.azurewebsites.net/api/Dashboard/data/');
 //     const data = await res.json();
 
+import { AccountData } from "@/interfaces/interfaces";
+
   
 //     const item = data[0];
 
@@ -17,7 +19,6 @@
 //   }
 // }
 
-import { AccountData } from "@/interfaces/interfaces";
 
 // Matches your C# DashboardModel perfectly
 interface RawDashboardResponse {
