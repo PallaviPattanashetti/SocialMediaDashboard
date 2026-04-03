@@ -1,4 +1,3 @@
-
 interface CardProps {
   type: "top" | "overview";
   label?: string;
