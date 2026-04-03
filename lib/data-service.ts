@@ -3,7 +3,7 @@
 import { AccountData } from "@/interfaces/interfaces";
 
 
-interface RawDashboardResponse {
+interface DashboardResponse {
   count: number;
   growth: number;
   isUp: boolean;
@@ -17,7 +17,7 @@ export const getData = async (): Promise<Record<string, AccountData> | null> => 
     
     if (!res.ok) throw new Error(`Server responded with ${res.status}`);
     
-    const data: RawDashboardResponse[] = await res.json();
+    const data: DashboardResponse[] = await res.json();
     const ids = ["fb", "tw", "ig", "yt", "fb-v", "fb-l", "ig-l", "ig-v", "tw-r", "tw-l", "yt-l", "yt-v"];
     const formatted: Record<string, AccountData> = {};
 
